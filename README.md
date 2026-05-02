@@ -1,8 +1,8 @@
-# Image color editor · Éditeur de couleurs d’image
+# Web toolbox · Boîte à outils web
 
-**EN** — A small, static web app to replace or remove colors in an image, crop, resize exports, and download in several formats. Everything runs in your browser; no server, no upload.
+**EN** — Static client-side tools for the web: an **image color editor** (replace/remove colors, crop, multi-format export) and a **QR code generator** (Wi-Fi / vCard, styles, logo, PNG/SVG). No server; your data stays in the browser.
 
-**FR** — Petite application web statique pour remplacer ou supprimer des couleurs dans une image, recadrer, redimensionner l’export et télécharger en plusieurs formats. Tout s’exécute dans le navigateur ; pas de serveur, pas d’envoi de fichiers.
+**FR** — Outils web **100 % navigateur** : **éditeur de couleurs d’image** (remplacer / supprimer des couleurs, crop, export multi-formats) et **générateur de QR code** (Wi-Fi, vCard, styles, logo, PNG/SVG). Pas de serveur applicatif ; vos données restent sur l’appareil.
 
 ---
 
@@ -10,7 +10,9 @@
 
 ### Overview
 
-This tool is **free to use** and requires **no account**. All image processing happens **locally** in your browser using the HTML Canvas API. Your images are **not sent** to any server.
+The site is **free to use** and requires **no account**. Shared **navigation** between pages (`index.html` ↔ `qr-code.html`).
+
+**Image editor** — All processing happens **locally** in your browser (HTML Canvas API). Your images are **not sent** to any server.
 
 ### Features
 
@@ -33,10 +35,20 @@ This tool is **free to use** and requires **no account**. All image processing h
   - Quality slider for JPEG/WebP
 - **UI** — Collapsible sections to save space; short hints on each section when folded.
 
+### QR Code generator (features)
+
+Open **`qr-code.html`**. Encoding uses the vendored **`qrcode`** library ([node-qrcode](https://github.com/soldair/node-qrcode) v1.5.1, MIT) — **no CDN**.
+
+- **Content** — Free text or URL; **Wi-Fi** and **vCard** presets; **import a `.vcf` file`** into the encoded payload.
+- **Appearance** — Error correction (L–H), size, margin, dark/light colors (live preview updates), **module styles**: classic squares, **rounded squares**, or **dots**.
+- **Logo** — Optional centered image (high ECC recommended).
+- **Export** — **PNG** and **SVG**; optional **transparent PNG** (background colour removed on export/copy only); **copy PNG** to the clipboard when supported.
+
 ### Tech stack
 
 - Plain **HTML**, **CSS**, **JavaScript** (no build step, no framework).
-- Files: `index.html`, `styles.css`, `app.js`.
+- **Image tool:** `index.html`, `styles.css`, `app.js`.
+- **QR tool:** `qr-code.html`, `qr-code.css`, `qr-code.js`, `vendor/qrcode.min.js`.
 
 ### How to run
 
@@ -65,14 +77,11 @@ Then open `http://localhost:8080` in your browser.
 - **ICO** export uses a simplified embedded PNG-style icon (size capped as in the code).
 - **SVG** export is not a vector trace of your image; it embeds the bitmap.
 
-### QR Code generator (second tool)
-
-Open **`qr-code.html`**. Encoding runs entirely in the browser. The **`qrcode`** library is **vendored** in `vendor/qrcode.min.js` (from [node-qrcode](https://github.com/soldair/node-qrcode) v1.5.1, MIT) so **no CDN** is required after clone.
-
 ### Repository layout
 
+The folder name on disk may differ from the **GitHub** repository name (e.g. `logo_tools` locally vs `logo-tools` on GitHub).
+
 ```
-logo_tools/
 ├── index.html      # Image editor — structure & UI
 ├── qr-code.html    # QR code generator
 ├── styles.css      # Shared layout, themes, responsive preview
@@ -83,16 +92,17 @@ logo_tools/
 │   └── qrcode.min.js   # Local copy of node-qrcode (browser build)
 ├── robots.txt      # Crawlers + sitemap URL
 ├── sitemap.xml     # List of public URLs for indexing
+├── LICENSE         # Apache-2.0 + third-party (node-qrcode MIT) section
 └── README.md       # This file
 ```
 
 ### Contributing
 
-Issues and pull requests are welcome (UI copy, accessibility, export edge cases, etc.).
+Issues and pull requests are welcome (UI copy, accessibility, export edge cases, SEO base URL, etc.).
 
 ### License
 
-Specify a license in the repository if you publish on GitHub (e.g. **MIT**). Until then, reuse is at your own discretion.
+The project **`LICENSE`** file applies **Apache License 2.0** to your authored material, with an appended **third-party** section for the bundled **node-qrcode** browser build (`vendor/qrcode.min.js`, MIT). Adjust the copyright line in the Apache appendix if needed.
 
 ---
 
@@ -100,7 +110,9 @@ Specify a license in the repository if you publish on GitHub (e.g. **MIT**). Unt
 
 ### Présentation
 
-Cet outil est **gratuit** et ne demande **aucun compte**. Tout le traitement d’image est effectué **en local** dans votre navigateur via l’API Canvas. Vos images **ne sont pas envoyées** sur un serveur.
+Le site est **gratuit** et ne demande **aucun compte**. **Navigation partagée** entre les pages (`index.html` ↔ `qr-code.html`).
+
+**Éditeur d’image** — Tout le traitement est fait **en local** dans le navigateur (API Canvas). Vos images **ne sont pas envoyées** sur un serveur.
 
 ### Fonctionnalités
 
@@ -123,10 +135,20 @@ Cet outil est **gratuit** et ne demande **aucun compte**. Tout le traitement d�
   - Curseur de **qualité** pour JPG/WebP
 - **Interface** — Sections **repliables** pour limiter la hauteur de page ; **rappel** sur chaque section lorsqu’elle est repliée.
 
+### Générateur QR Code (fonctionnalités)
+
+Ouvrir **`qr-code.html`**. L’encodage utilise la bibliothèque **`qrcode`** fournie dans le dépôt ([node-qrcode](https://github.com/soldair/node-qrcode) v1.5.1, MIT) — **pas de CDN**.
+
+- **Contenu** — Texte ou URL ; préréglages **Wi-Fi** et **vCard** ; **import d’un fichier `.vcf`** pour remplir le contenu encodé.
+- **Apparence** — Niveau de correction d’erreur (L à H), taille, marge, couleurs modules / fond (mise à jour en direct), **style des modules** : carrés standard, **carrés arrondis** ou **pastilles**.
+- **Logo** — Image centrée optionnelle (ECC élevé recommandé).
+- **Export** — **PNG** et **SVG** ; option **PNG sans fond** (transparence à l’export / à la copie, pas sur l’aperçu) ; **copie PNG** dans le presse-papiers si le navigateur le permet.
+
 ### Technique
 
 - **HTML**, **CSS**, **JavaScript** purs (pas de compilation, pas de framework).
-- Fichiers : `index.html`, `styles.css`, `app.js`.
+- **Éditeur d’image :** `index.html`, `styles.css`, `app.js`.
+- **QR code :** `qr-code.html`, `qr-code.css`, `qr-code.js`, `vendor/qrcode.min.js`.
 
 ### Lancer l’application
 
@@ -155,14 +177,11 @@ Puis ouvrir `http://localhost:8080` dans le navigateur.
 - L’export **ICO** suit une construction d’icône classique (taille plafonnée comme dans le code).
 - L’export **SVG** n’est pas une vectorisation : il intègre le bitmap.
 
-### Générateur QR Code (deuxième outil)
-
-Ouvrir **`qr-code.html`**. L’encodage se fait entièrement dans le navigateur. La bibliothèque **`qrcode`** est **incluse dans le dépôt** (`vendor/qrcode.min.js`, dérivée de [node-qrcode](https://github.com/soldair/node-qrcode) v1.5.1, licence MIT), donc **aucun CDN** n’est nécessaire après clonage.
-
 ### Arborescence
 
+Le nom du dossier local peut différer du **dépôt GitHub** (ex. `logo_tools` en local vs `logo-tools` sur GitHub).
+
 ```
-logo_tools/
 ├── index.html      # Éditeur d’image — structure et interface
 ├── qr-code.html    # Générateur QR Code
 ├── styles.css      # Mise en page partagée, thème, aperçu responsive
@@ -173,13 +192,14 @@ logo_tools/
 │   └── qrcode.min.js   # Copie locale de node-qrcode (build navigateur)
 ├── robots.txt      # Crawlers + URL du sitemap
 ├── sitemap.xml     # URLs publiques pour l’indexation
+├── LICENSE         # Apache-2.0 + section tiers (node-qrcode MIT)
 └── README.md       # Ce fichier
 ```
 
 ### Contribution
 
-Les retours et les pull requests sont les bienvenus (texte, accessibilité, cas limites d’export, etc.).
+Les retours et les pull requests sont les bienvenus (texte, accessibilité, cas limites d’export, URL de base SEO, etc.).
 
 ### Licence
 
-Précisez une licence sur le dépôt si vous publiez sur GitHub (par ex. **MIT**). En l’absence de fichier de licence, la réutilisation reste à votre appréciation.
+Le fichier **`LICENSE`** applique la **licence Apache 2.0** à votre travail, avec une section **logiciels tiers** pour le build navigateur **node-qrcode** (`vendor/qrcode.min.js`, MIT). Adaptez la ligne de copyright de l’annexe Apache si besoin.
