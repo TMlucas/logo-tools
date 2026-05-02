@@ -3,10 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Éditeur de couleurs d'image</title>
+    <!-- URL canonique / Open Graph : adaptez si dépôt, compte GitHub ou domaine custom diffèrent -->
+    <link rel="canonical" href="https://tmlucas.github.io/logo-tools/" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="TMlucas" />
+    <meta
+      name="description"
+      content="Éditeur d'image dans le navigateur : remplacer ou supprimer des couleurs, fond transparent, recadrage, export PNG/JPG/WebP/ICO/SVG. Gratuit, traitement 100 % local."
+    />
+    <meta
+      name="keywords"
+      content="éditeur image, QR code, couleurs, fond transparent, canvas, navigateur, gratuit, outil web"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Boîte à outils web" />
+    <meta property="og:title" content="Éditeur de couleurs d'image — Boîte à outils web" />
+    <meta
+      property="og:description"
+      content="Modifier une image en local : remplacement de couleurs, suppression pour PNG transparent, crop et export multi-formats."
+    />
+    <meta property="og:url" content="https://tmlucas.github.io/logo-tools/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Éditeur de couleurs d'image — Boîte à outils web" />
+    <meta
+      name="twitter:description"
+      content="Outil gratuit dans le navigateur : couleurs, transparence, export. Aucune donnée envoyée sur un serveur."
+    />
+    <meta name="theme-color" content="#111827" />
+    <title>Éditeur de couleurs d'image — Boîte à outils web</title>
     <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Boîte à outils web",
+        "url": "https://tmlucas.github.io/logo-tools/",
+        "inLanguage": "fr",
+        "description": "Outils gratuits dans le navigateur : édition d'image et génération de QR codes, traitement local.",
+        "publisher": { "@type": "Organization", "name": "Boîte à outils web" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Outils",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Éditeur de couleurs d'image",
+            "url": "https://tmlucas.github.io/logo-tools/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Générateur de QR code",
+            "url": "https://tmlucas.github.io/logo-tools/qr-code.html"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./index.html" class="site-nav-brand">Boîte à outils web</a>
+      <div class="site-nav-links">
+        <a href="./index.html" class="is-current">Éditeur d'image</a>
+        <a href="./qr-code.html">Générateur QR Code</a>
+      </div>
+    </nav>
     <main class="app">
       <header class="page-header">
         <h1>Éditeur de couleurs d'image</h1>

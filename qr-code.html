@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://tmlucas.github.io/logo-tools/qr-code.html" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="TMlucas" />
+    <meta
+      name="description"
+      content="Générateur de QR code dans le navigateur : texte, URL, Wi-Fi, vCard, styles arrondis, logo, export PNG/SVG. Gratuit, encodage local."
+    />
+    <meta name="keywords" content="QR code, générateur QR, vCard, Wi-Fi, PNG transparent, SVG, navigateur, gratuit" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Boîte à outils web" />
+    <meta property="og:title" content="Générateur de QR code — Boîte à outils web" />
+    <meta
+      property="og:description"
+      content="Créer un QR code en local : préréglages Wi-Fi et vCard, personnalisation visuelle, export PNG ou SVG."
+    />
+    <meta property="og:url" content="https://tmlucas.github.io/logo-tools/qr-code.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Générateur de QR code — Boîte à outils web" />
+    <meta
+      name="twitter:description"
+      content="QR codes personnalisables, sans envoi de données sur un serveur (hors chargement initial de la page)."
+    />
+    <meta name="theme-color" content="#111827" />
+    <title>Générateur de QR code — Boîte à outils web</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./qr-code.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Générateur de QR code",
+        "url": "https://tmlucas.github.io/logo-tools/qr-code.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "fr",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "description": "Génération de QR codes (texte, lien, Wi-Fi, vCard), styles de modules, export PNG/SVG, traitement dans le navigateur."
+      }
+    </script>
+  </head>
+  <body class="qr-page">
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./index.html" class="site-nav-brand">Boîte à outils web</a>
+      <div class="site-nav-links">
+        <a href="./index.html">Éditeur d'image</a>
+        <a href="./qr-code.html" class="is-current">Générateur QR Code</a>
+      </div>
+    </nav>
+
+    <main class="app">
+      <header class="page-header">
+        <h1>Générateur de QR Code</h1>
+        <section class="card intro" aria-labelledby="qr-intro-title">
+          <h2 id="qr-intro-title">Présentation</h2>
+          <p>
+            Créez des QR codes (texte, lien, Wi-Fi, carte de visite…) directement dans le navigateur. Aperçu instantané, personnalisation des couleurs et de la taille, logo central optionnel, export PNG ou SVG.
+          </p>
+          <p>
+            <strong>Gratuit, sans compte.</strong> Le contenu du QR code est encodé <strong>en local</strong> sur votre appareil. La bibliothèque d’encodage est fournie avec le projet (fichier <code>vendor/qrcode.min.js</code>)&nbsp;: aucune requête réseau n’est nécessaire pour générer un QR code une fois la page ouverte.
+          </p>
+          <p class="intro-hint">
+            Les sections ci-dessous sont repliables ; le résumé indique leur rôle lorsqu’elles sont fermées.
+          </p>
+        </section>
+      </header>
+
+      <details class="card collapsible" open>
+        <summary class="card-summary">
+          <span class="card-summary-title">1 · Contenu du QR code</span>
+          <span class="card-summary-hint">Texte, URL ou données générées par les préréglages Wi-Fi / vCard</span>
+        </summary>
+        <div class="card-body">
+          <label class="field-label" for="qrContent">Contenu encodé</label>
+          <textarea id="qrContent" class="qr-content-input" rows="5" placeholder="https://exemple.com ou tout texte…"></textarea>
+          <p id="charCount" class="qr-char-count" aria-live="polite">0 caractère</p>
+        </div>
+      </details>
+
+      <details class="card collapsible">
+        <summary class="card-summary">
+          <span class="card-summary-title">2 · Préréglages rapides</span>
+          <span class="card-summary-hint">Wi-Fi, vCard manuelle ou import d’un fichier .vcf</span>
+        </summary>
+        <div class="card-body">
+          <h3 style="margin-top: 0">Wi-Fi</h3>
+          <div class="qr-meta-grid">
+            <label class="field-label">Nom du réseau (SSID)
+              <input id="wifiSsid" type="text" autocomplete="off" placeholder="Mon_WiFi" />
+            </label>
+            <label class="field-label">Mot de passe
+              <input id="wifiPass" type="password" autocomplete="off" placeholder="" />
+            </label>
+            <label class="field-label">Sécurité
+              <select id="wifiSec">
+                <option value="WPA">WPA / WPA2</option>
+                <option value="WEP">WEP</option>
+                <option value="nopass">Aucun (réseau ouvert)</option>
+              </select>
+            </label>
+            <label class="field-label field-label--checkbox" style="grid-column: 1 / -1">
+              <input id="wifiHidden" type="checkbox" />
+              Réseau masqué
+            </label>
+          </div>
+          <div class="field-row" style="margin-top: 14px">
+            <button type="button" id="applyWifiBtn" class="btn secondary">Insérer la chaîne Wi-Fi dans le contenu</button>
+          </div>
+
+          <h3 style="margin-top: 24px">vCard (contact)</h3>
+          <div class="qr-meta-grid">
+            <label class="field-label">Nom affiché
+              <input id="vcardFn" type="text" placeholder="Jean Dupont" />
+            </label>
+            <label class="field-label">Téléphone
+              <input id="vcardTel" type="text" placeholder="+33 6 12 34 56 78" />
+            </label>
+            <label class="field-label">E-mail
+              <input id="vcardEmail" type="text" placeholder="jean@exemple.fr" />
+            </label>
+            <label class="field-label">Organisation (optionnel)
+              <input id="vcardOrg" type="text" placeholder="" />
+            </label>
+          </div>
+          <div class="field-row" style="margin-top: 14px">
+            <button type="button" id="applyVcardBtn" class="btn secondary">Insérer la vCard dans le contenu</button>
+          </div>
+
+          <h3 style="margin-top: 24px">Importer un fichier vCard</h3>
+          <p class="qr-hint-block">
+            Choisissez un fichier <code>.vcf</code> exporté depuis vos contacts ou un autre outil. Son contenu remplace le champ «&nbsp;Contenu encodé&nbsp;» (section 1) pour générer le QR code. Tout reste traité dans le navigateur.
+          </p>
+          <div class="field-row">
+            <label class="field-label">Fichier .vcf / vCard
+              <input id="vcardImportFile" type="file" accept=".vcf,.vcard,text/vcard,text/x-vcard,text/directory,application/vnd.contact" />
+            </label>
+          </div>
+        </div>
+      </details>
+
+      <details class="card collapsible">
+        <summary class="card-summary">
+          <span class="card-summary-title">3 · Apparence et qualité</span>
+          <span class="card-summary-hint">ECC, taille, marge, couleurs, style des modules, logo</span>
+        </summary>
+        <div class="card-body">
+          <div class="field-row">
+            <label class="field-label">Correction d’erreurs (ECC)
+              <select id="qrEcc">
+                <option value="L">L — ~7 % (meilleure densité)</option>
+                <option value="M" selected>M — ~15 %</option>
+                <option value="Q">Q — ~25 %</option>
+                <option value="H">H — ~30 % (recommandé avec logo)</option>
+              </select>
+            </label>
+            <label class="field-label">Largeur (px)
+              <input id="qrWidth" type="number" min="64" max="2048" step="32" value="256" />
+            </label>
+            <label class="field-label">Marge (modules)
+              <input id="qrMargin" type="number" min="0" max="10" step="1" value="2" />
+            </label>
+            <label class="field-label">Style des modules
+              <select id="qrModuleStyle">
+                <option value="classic">Carrés — standard (meilleure compatibilité scan)</option>
+                <option value="rounded">Carrés arrondis</option>
+                <option value="dots">Pastilles (points)</option>
+              </select>
+            </label>
+          </div>
+          <p class="qr-hint-block">
+            Les styles <strong>arrondis</strong> ou <strong>pastilles</strong> redessinent la matrice du QR&nbsp;: l’aspect change, les données encodées restent identiques. Certains lecteurs très anciens peuvent être moins tolérants qu’avec le rendu carré classique.
+          </p>
+          <div class="field-row">
+            <label class="field-label">Couleur modules (foncé)
+              <input id="qrColorDarkHex" type="text" value="#000000" maxlength="9" />
+            </label>
+            <label class="field-label">Aperçu
+              <input id="qrColorDarkPicker" type="color" value="#000000" />
+            </label>
+            <label class="field-label">Couleur fond (clair)
+              <input id="qrColorLightHex" type="text" value="#ffffff" maxlength="9" />
+            </label>
+            <label class="field-label">Aperçu
+              <input id="qrColorLightPicker" type="color" value="#ffffff" />
+            </label>
+          </div>
+          <div class="field-row logo-row">
+            <label class="field-label field-label--checkbox">
+              <input id="qrLogoEnabled" type="checkbox" />
+              Logo au centre (réduit la zone lisible — utiliser ECC élevé)
+            </label>
+            <label class="field-label">Image logo (PNG, JPG…)
+              <input id="qrLogoFile" type="file" accept="image/*" />
+            </label>
+          </div>
+          <p class="qr-hint-block">
+            Avec un logo, choisissez de préférence la correction <strong>H</strong> et gardez le logo petit pour un scan fiable.
+          </p>
+        </div>
+      </details>
+
+      <details class="card collapsible" open>
+        <summary class="card-summary">
+          <span class="card-summary-title">4 · Aperçu et export</span>
+          <span class="card-summary-hint">PNG / SVG, fond transparent optionnel sur le PNG, copie</span>
+        </summary>
+        <div class="card-body">
+          <div class="qr-preview-wrap">
+            <canvas id="qrCanvas" width="256" height="256" aria-label="Aperçu du QR code"></canvas>
+            <p id="qrStatus" class="status" style="margin: 0; text-align: center">Saisissez un contenu pour générer le QR code.</p>
+          </div>
+          <div class="field-row" style="margin-top: 8px">
+            <label class="field-label">Nom du fichier (export)
+              <input id="qrFilename" type="text" value="qrcode" />
+            </label>
+            <label class="field-label field-label--checkbox">
+              <input id="qrPngTransparentBg" type="checkbox" />
+              PNG sans fond (transparence à la place de la couleur «&nbsp;fond&nbsp;»)
+            </label>
+            <button type="button" id="exportPngBtn" class="btn">Télécharger PNG</button>
+            <button type="button" id="exportSvgBtn" class="btn secondary">Télécharger SVG</button>
+            <button type="button" id="copyPngBtn" class="btn secondary">Copier l’image (PNG)</button>
+          </div>
+          <p class="qr-hint-block">
+            La case <strong>PNG sans fond</strong> s’applique au téléchargement et à la copie PNG&nbsp;: les pixels proches de la couleur de fond du QR sont rendus transparents (l’aperçu à l’écran garde le fond pour la lisibilité).
+          </p>
+        </div>
+      </details>
+    </main>
+
+    <script src="./vendor/qrcode.min.js"></script>
+    <script src="./qr-code.js"></script>
+  </body>
+</html>

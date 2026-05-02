@@ -52,20 +52,38 @@ python -m http.server 8080
 
 Then open `http://localhost:8080` in your browser.
 
+### SEO (GitHub Pages)
+
+- **`index.html`** and **`qr-code.html`** include `meta description`, **Open Graph**, **Twitter Card**, **`canonical`**, and **JSON-LD** (site + tools list / web app).
+- **`robots.txt`** and **`sitemap.xml`** are at the repo root for crawlers.
+- **Important:** URLs are set to `https://tmlucas.github.io/logo-tools/` (project site). If your username, repository name, or **custom domain** differs, search-replace that base URL in: `index.html`, `qr-code.html`, `robots.txt`, `sitemap.xml`.
+- Optional next step: add **`og:image`** (absolute URL to a 1200×630 preview) and a **`favicon.ico`** / `apple-touch-icon` for richer sharing and tabs.
+
 ### Browser notes
 
 - **URL import** may fail if the image host does not allow cross-origin use (`Access-Control-Allow-Origin`). Local files and paste are not affected the same way.
 - **ICO** export uses a simplified embedded PNG-style icon (size capped as in the code).
 - **SVG** export is not a vector trace of your image; it embeds the bitmap.
 
+### QR Code generator (second tool)
+
+Open **`qr-code.html`**. Encoding runs entirely in the browser. The **`qrcode`** library is **vendored** in `vendor/qrcode.min.js` (from [node-qrcode](https://github.com/soldair/node-qrcode) v1.5.1, MIT) so **no CDN** is required after clone.
+
 ### Repository layout
 
 ```
 logo_tools/
-├── index.html    # Structure & UI
-├── styles.css    # Layout, themes, responsive preview
-├── app.js        # Logic: canvas, history, crop, export
-└── README.md     # This file
+├── index.html      # Image editor — structure & UI
+├── qr-code.html    # QR code generator
+├── styles.css      # Shared layout, themes, responsive preview
+├── qr-code.css     # QR page extras
+├── app.js          # Image editor logic
+├── qr-code.js      # QR generator logic
+├── vendor/
+│   └── qrcode.min.js   # Local copy of node-qrcode (browser build)
+├── robots.txt      # Crawlers + sitemap URL
+├── sitemap.xml     # List of public URLs for indexing
+└── README.md       # This file
 ```
 
 ### Contributing
@@ -124,20 +142,38 @@ python -m http.server 8080
 
 Puis ouvrir `http://localhost:8080` dans le navigateur.
 
+### SEO (GitHub Pages)
+
+- **`index.html`** et **`qr-code.html`** incluent `meta description`, balises **Open Graph**, **Twitter Card**, lien **`canonical`** et **JSON-LD** (site + liste d’outils / application web).
+- **`robots.txt`** et **`sitemap.xml`** à la racine du dépôt pour les robots d’indexation.
+- **À personnaliser :** les URL pointent vers `https://tmlucas.github.io/logo-tools/`. Si votre compte, le nom du dépôt ou un **domaine personnalisé** change, faites un remplacement global de cette base dans `index.html`, `qr-code.html`, `robots.txt` et `sitemap.xml`.
+- Pour aller plus loin : ajouter une **`og:image`** (URL absolue, visuel ~1200×630) et un **favicon** pour le partage social et l’onglet du navigateur.
+
 ### Notes navigateur
 
 - L’import par **URL** peut échouer si le serveur de l’image n’autorise pas l’usage cross-origin (`Access-Control-Allow-Origin`). Les fichiers locaux et le collage sont moins concernés.
 - L’export **ICO** suit une construction d’icône classique (taille plafonnée comme dans le code).
 - L’export **SVG** n’est pas une vectorisation : il intègre le bitmap.
 
+### Générateur QR Code (deuxième outil)
+
+Ouvrir **`qr-code.html`**. L’encodage se fait entièrement dans le navigateur. La bibliothèque **`qrcode`** est **incluse dans le dépôt** (`vendor/qrcode.min.js`, dérivée de [node-qrcode](https://github.com/soldair/node-qrcode) v1.5.1, licence MIT), donc **aucun CDN** n’est nécessaire après clonage.
+
 ### Arborescence
 
 ```
 logo_tools/
-├── index.html    # Structure et interface
-├── styles.css    # Mise en page, thème, aperçu responsive
-├── app.js        # Logique canvas, historique, crop, export
-└── README.md     # Ce fichier
+├── index.html      # Éditeur d’image — structure et interface
+├── qr-code.html    # Générateur QR Code
+├── styles.css      # Mise en page partagée, thème, aperçu responsive
+├── qr-code.css     # Styles complémentaires page QR
+├── app.js          # Logique éditeur d’image
+├── qr-code.js      # Logique générateur QR
+├── vendor/
+│   └── qrcode.min.js   # Copie locale de node-qrcode (build navigateur)
+├── robots.txt      # Crawlers + URL du sitemap
+├── sitemap.xml     # URLs publiques pour l’indexation
+└── README.md       # Ce fichier
 ```
 
 ### Contribution

@@ -1,0 +1,5 @@
+# Adaptez l'URL du Sitemap si votre site GitHub Pages utilise un autre domaine ou chemin.
+User-agent: *
+Allow: /
+
+Sitemap: https://tmlucas.github.io/logo-tools/sitemap.xml
