@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Éditeur de couleurs d'image</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="page-header">
+        <h1>Éditeur de couleurs d'image</h1>
+        <section class="card intro" aria-labelledby="intro-title">
+          <h2 id="intro-title">Présentation</h2>
+          <p>
+            Cet outil vous permet de modifier une image directement dans votre navigateur&nbsp;: remplacer une couleur par une autre, supprimer une couleur pour obtenir un fond transparent, recadrer et exporter dans plusieurs formats.
+          </p>
+          <p>
+            <strong>Accès libre et gratuit.</strong> Aucune création de compte n'est nécessaire. <strong>Toutes vos images sont traitées en local</strong> sur votre appareil&nbsp;: rien n'est envoyé vers un serveur.
+          </p>
+          <p class="intro-hint">
+            Utilisez les sections ci-dessous (cliquez sur le titre pour les ouvrir ou les replier). Quand une section est repliée, un court rappel indique son rôle.
+          </p>
+        </section>
+      </header>
+
+      <details class="card collapsible">
+        <summary class="card-summary">
+          <span class="card-summary-title">1 · Importer une image</span>
+          <span class="card-summary-hint">Fichier, URL, collage (Ctrl+V) ou glisser-déposer</span>
+        </summary>
+        <div class="card-body">
+          <div id="dropzone" class="dropzone" tabindex="0" aria-label="Zone de dépôt image">
+            Glissez une image ici, collez-la (Ctrl+V) ou utilisez les options ci-dessous.
+          </div>
+          <div class="field-row">
+            <label class="btn">
+              Choisir un fichier
+              <input id="fileInput" type="file" accept="image/*" hidden />
+            </label>
+            <input id="urlInput" type="url" placeholder="https://exemple.com/image.png" />
+            <button id="loadUrlBtn" type="button" class="btn secondary">Charger l'URL</button>
+          </div>
+          <p id="importStatus" class="status">Aucune image chargée.</p>
+        </div>
+      </details>
+
+      <details class="card collapsible controls">
+        <summary class="card-summary">
+          <span class="card-summary-title">2 · Remplacer une couleur</span>
+          <span class="card-summary-hint">Couleur source → couleur cible, pipette et tolérance</span>
+        </summary>
+        <div class="card-body">
+          <div class="field-row">
+            <label class="field-label">Couleur source (hexa)
+              <input id="sourceHex" type="text" value="#ffffff" maxlength="9" />
+            </label>
+            <label class="field-label">Couleur source (palette)
+              <input id="sourcePicker" type="color" value="#ffffff" />
+            </label>
+            <button id="pickSourceBtn" type="button" class="btn secondary">Pipette source</button>
+          </div>
+          <div class="field-row">
+            <label class="field-label">Couleur de remplacement (hexa)
+              <input id="targetHex" type="text" value="#000000" maxlength="9" />
+            </label>
+            <label class="field-label">Couleur de remplacement (palette)
+              <input id="targetPicker" type="color" value="#000000" />
+            </label>
+            <button id="pickTargetBtn" type="button" class="btn secondary">Pipette cible</button>
+          </div>
+          <div class="field-row">
+            <label class="field-label">Tolérance
+              <input id="tolerance" type="range" min="0" max="255" value="40" />
+            </label>
+            <span id="toleranceValue" class="field-inline-value">40</span>
+            <button id="replaceBtn" type="button" class="btn">Remplacer la couleur</button>
+          </div>
+        </div>
+      </details>
+
+      <details class="card collapsible controls">
+        <summary class="card-summary">
+          <span class="card-summary-title">3 · Supprimer une couleur</span>
+          <span class="card-summary-hint">Rendre une couleur transparente (idéal pour PNG sans fond)</span>
+        </summary>
+        <div class="card-body">
+          <div class="field-row">
+            <label class="field-label">Couleur à supprimer (hexa)
+              <input id="removeHex" type="text" value="#ffffff" maxlength="9" />
+            </label>
+            <label class="field-label">Couleur à supprimer (palette)
+              <input id="removePicker" type="color" value="#ffffff" />
+            </label>
+            <button id="pickRemoveBtn" type="button" class="btn secondary">Pipette suppression</button>
+          </div>
+          <div class="field-row">
+            <label class="field-label">Tolérance suppression
+              <input id="removeTolerance" type="range" min="0" max="255" value="40" />
+            </label>
+            <span id="removeToleranceValue" class="field-inline-value">40</span>
+            <button id="removeBtn" type="button" class="btn warning">Supprimer la couleur</button>
+          </div>
+        </div>
+      </details>
+
+      <details class="card collapsible controls">
+        <summary class="card-summary">
+          <span class="card-summary-title">4 · Exporter l'image</span>
+          <span class="card-summary-hint">Format, qualité, dimensions, crop et téléchargement</span>
+        </summary>
+        <div class="card-body">
+          <div class="field-row">
+            <label class="field-label">Nom du fichier
+              <input id="filename" type="text" value="image-editee" />
+            </label>
+            <label class="field-label">Format
+              <select id="formatSelect">
+                <option value="png">PNG</option>
+                <option value="jpg">JPG</option>
+                <option value="webp">WEBP</option>
+                <option value="ico">ICO</option>
+                <option value="svg">SVG</option>
+              </select>
+            </label>
+            <label id="qualityWrap" class="field-label">Qualité (JPG/WEBP)
+              <input id="quality" type="range" min="0.1" max="1" value="0.92" step="0.01" />
+            </label>
+            <span id="qualityValue" class="field-inline-value">0.92</span>
+            <button id="exportBtn" type="button" class="btn">Exporter</button>
+            <button id="resetBtn" type="button" class="btn secondary">Réinitialiser</button>
+          </div>
+          <div class="field-row">
+            <label class="field-label">Largeur export (px)
+              <input id="exportWidth" type="number" min="1" step="1" placeholder="auto" />
+            </label>
+            <label class="field-label">Hauteur export (px)
+              <input id="exportHeight" type="number" min="1" step="1" placeholder="auto" />
+            </label>
+            <label class="field-label field-label--checkbox">
+              <input id="lockAspect" type="checkbox" checked />
+              Conserver le ratio
+            </label>
+          </div>
+          <div class="field-row">
+            <label class="field-label field-label--checkbox">
+              <input id="useCrop" type="checkbox" />
+              Exporter uniquement la zone de crop
+            </label>
+            <button id="cropModeBtn" type="button" class="btn secondary">Activer crop</button>
+            <label class="field-label field-label--compact">X
+              <input id="cropX" type="number" min="0" step="1" value="0" />
+            </label>
+            <label class="field-label field-label--compact">Y
+              <input id="cropY" type="number" min="0" step="1" value="0" />
+            </label>
+            <label class="field-label field-label--compact">W
+              <input id="cropW" type="number" min="1" step="1" value="1" />
+            </label>
+            <label class="field-label field-label--compact">H
+              <input id="cropH" type="number" min="1" step="1" value="1" />
+            </label>
+          </div>
+        </div>
+      </details>
+
+      <details class="card collapsible">
+        <summary class="card-summary">
+          <span class="card-summary-title">5 · Aperçu et navigation</span>
+          <span class="card-summary-hint">Avant / après, zoom, déplacement, annuler et rétablir</span>
+        </summary>
+        <div class="card-body">
+          <div class="field-row">
+            <button id="undoBtn" type="button" class="btn secondary">Annuler</button>
+            <button id="redoBtn" type="button" class="btn secondary">Rétablir</button>
+            <button id="zoomOutBtn" type="button" class="btn secondary">- Zoom</button>
+            <button id="zoomInBtn" type="button" class="btn secondary">+ Zoom</button>
+            <button id="resetViewBtn" type="button" class="btn secondary">Réinitialiser la vue</button>
+            <span id="zoomLabel" class="field-inline-value">Zoom: 100%</span>
+          </div>
+          <p class="hint">Glisser dans la zone d'aperçu pour déplacer l'image (pan).</p>
+          <div id="previewViewport" class="preview-viewport">
+            <div id="previewStage" class="preview-stage">
+              <div class="preview-pane">
+                <h3>Avant</h3>
+                <canvas id="beforeCanvas"></canvas>
+              </div>
+              <div class="preview-pane">
+                <h3>Après</h3>
+                <div class="canvas-wrap">
+                  <canvas id="canvas"></canvas>
+                  <div id="cropOverlay" class="crop-overlay" hidden></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
