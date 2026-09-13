@@ -1,0 +1,89 @@
+.stitch-hint {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #9ca3af;
+  line-height: 1.45;
+}
+
+.stitch-preview-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.8fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.stitch-preview-wrap {
+  overflow: auto;
+  max-height: min(70vh, 720px);
+  border: 1px solid #4b5563;
+  border-radius: 12px;
+  background: #111827;
+  padding: 12px;
+}
+
+#patternCanvas {
+  display: block;
+  image-rendering: pixelated;
+  background:
+    linear-gradient(45deg, #374151 25%, transparent 25%),
+    linear-gradient(-45deg, #374151 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #374151 75%),
+    linear-gradient(-45deg, transparent 75%, #374151 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+.stitch-legend-wrap {
+  border: 1px solid #4b5563;
+  border-radius: 12px;
+  background: #111827;
+  padding: 12px 14px;
+  max-height: min(70vh, 720px);
+  overflow: auto;
+}
+
+.stitch-legend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stitch-legend-item {
+  display: grid;
+  grid-template-columns: 28px 28px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.88rem;
+  color: #e5e7eb;
+}
+
+.stitch-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #6b7280;
+}
+
+.stitch-symbol {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #4b5563;
+  border-radius: 6px;
+  background: #1f2937;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.stitch-count {
+  color: #93c5fd;
+  white-space: nowrap;
+}
+
+@media (max-width: 800px) {
+  .stitch-preview-layout {
+    grid-template-columns: 1fr;
+  }
+}

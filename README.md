@@ -1,8 +1,8 @@
 # Web toolbox · Boîte à outils web
 
-**EN** — Static client-side tools for the web: an **image color editor** (replace/remove colors, crop, multi-format export) and a **QR code generator** (Wi-Fi / vCard, styles, logo, PNG/SVG). No server; your data stays in the browser.
+**EN** — Static client-side tools for the web: an **image color editor**, a **QR code generator**, and a **cross-stitch pattern maker** (image → embroidery chart). No server; your data stays in the browser.
 
-**FR** — Outils web **100 % navigateur** : **éditeur de couleurs d’image** (remplacer / supprimer des couleurs, crop, export multi-formats) et **générateur de QR code** (Wi-Fi, vCard, styles, logo, PNG/SVG). Pas de serveur applicatif ; vos données restent sur l’appareil.
+**FR** — Outils web **100 % navigateur** : **éditeur de couleurs d’image**, **générateur de QR code**, et **convertisseur image → plan de broderie point de croix**. Pas de serveur applicatif ; vos données restent sur l’appareil.
 
 ---
 
@@ -10,7 +10,7 @@
 
 ### Overview
 
-The site is **free to use** and requires **no account**. Shared **navigation** between pages (`index.html` ↔ `qr-code.html`).
+The site is **free to use** and requires **no account**. Shared **navigation** between pages (`index.html`, `qr-code.html`, `stitch.html`).
 
 **Image editor** — All processing happens **locally** in your browser (HTML Canvas API). Your images are **not sent** to any server.
 
@@ -44,11 +44,23 @@ Open **`qr-code.html`**. Encoding uses the vendored **`qrcode`** library ([node-
 - **Logo** — Optional centered image (high ECC recommended).
 - **Export** — **PNG** and **SVG**; optional **transparent PNG** (background colour removed on export/copy only); **copy PNG** to the clipboard when supported.
 
+### Cross-stitch pattern maker
+
+Open **`stitch.html`**. Turn a photo into an embroidery chart entirely in the browser.
+
+- **Import** — File picker, drag-and-drop, or paste (`Ctrl+V` / `Cmd+V`).
+- **Grid** — Width/height in **stitches**, optional aspect lock.
+- **Palette** — Maximum colour count (median-cut quantisation); average or nearest sampling.
+- **Options** — Grid lines, per-colour **symbols**, ignore transparency + alpha threshold.
+- **Legend** — Colours, symbols, stitch counts.
+- **Export** — Pattern **PNG**, legend **PNG**, palette **CSV**.
+
 ### Tech stack
 
 - Plain **HTML**, **CSS**, **JavaScript** (no build step, no framework).
 - **Image tool:** `index.html`, `styles.css`, `app.js`.
 - **QR tool:** `qr-code.html`, `qr-code.css`, `qr-code.js`, `vendor/qrcode.min.js`.
+- **Cross-stitch:** `stitch.html`, `stitch.css`, `stitch.js`.
 
 ### How to run
 
@@ -84,10 +96,13 @@ The folder name on disk may differ from the **GitHub** repository name (e.g. `lo
 ```
 ├── index.html      # Image editor — structure & UI
 ├── qr-code.html    # QR code generator
+├── stitch.html     # Cross-stitch pattern maker
 ├── styles.css      # Shared layout, themes, responsive preview
 ├── qr-code.css     # QR page extras
+├── stitch.css      # Cross-stitch page extras
 ├── app.js          # Image editor logic
 ├── qr-code.js      # QR generator logic
+├── stitch.js       # Cross-stitch logic
 ├── vendor/
 │   └── qrcode.min.js   # Local copy of node-qrcode (browser build)
 ├── robots.txt      # Crawlers + sitemap URL
@@ -110,7 +125,7 @@ The project **`LICENSE`** file applies **Apache License 2.0** to your authored m
 
 ### Présentation
 
-Le site est **gratuit** et ne demande **aucun compte**. **Navigation partagée** entre les pages (`index.html` ↔ `qr-code.html`).
+Le site est **gratuit** et ne demande **aucun compte**. **Navigation partagée** entre les pages (`index.html`, `qr-code.html`, `stitch.html`).
 
 **Éditeur d’image** — Tout le traitement est fait **en local** dans le navigateur (API Canvas). Vos images **ne sont pas envoyées** sur un serveur.
 
@@ -144,11 +159,23 @@ Ouvrir **`qr-code.html`**. L’encodage utilise la bibliothèque **`qrcode`** fo
 - **Logo** — Image centrée optionnelle (ECC élevé recommandé).
 - **Export** — **PNG** et **SVG** ; option **PNG sans fond** (transparence à l’export / à la copie, pas sur l’aperçu) ; **copie PNG** dans le presse-papiers si le navigateur le permet.
 
+### Plan de broderie point de croix
+
+Ouvrir **`stitch.html`**. Transformer une photo en schéma de broderie, entièrement dans le navigateur.
+
+- **Import** — Fichier, glisser-déposer ou collage (`Ctrl+V` / `Cmd+V`).
+- **Grille** — Largeur / hauteur en **points**, option conserver le ratio.
+- **Palette** — Nombre max de couleurs (quantification *median cut*) ; échantillonnage moyenne ou plus proche.
+- **Options** — Grille, **symboles** par couleur, ignorer la transparence + seuil alpha.
+- **Légende** — Couleurs, symboles, nombre de points.
+- **Export** — Plan **PNG**, légende **PNG**, palette **CSV**.
+
 ### Technique
 
 - **HTML**, **CSS**, **JavaScript** purs (pas de compilation, pas de framework).
 - **Éditeur d’image :** `index.html`, `styles.css`, `app.js`.
 - **QR code :** `qr-code.html`, `qr-code.css`, `qr-code.js`, `vendor/qrcode.min.js`.
+- **Point de croix :** `stitch.html`, `stitch.css`, `stitch.js`.
 
 ### Lancer l’application
 
@@ -184,10 +211,13 @@ Le nom du dossier local peut différer du **dépôt GitHub** (ex. `logo_tools` e
 ```
 ├── index.html      # Éditeur d’image — structure et interface
 ├── qr-code.html    # Générateur QR Code
+├── stitch.html     # Plan de broderie point de croix
 ├── styles.css      # Mise en page partagée, thème, aperçu responsive
 ├── qr-code.css     # Styles complémentaires page QR
+├── stitch.css      # Styles page point de croix
 ├── app.js          # Logique éditeur d’image
 ├── qr-code.js      # Logique générateur QR
+├── stitch.js       # Logique point de croix
 ├── vendor/
 │   └── qrcode.min.js   # Copie locale de node-qrcode (build navigateur)
 ├── robots.txt      # Crawlers + URL du sitemap

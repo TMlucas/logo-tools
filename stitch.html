@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://tmlucas.github.io/logo-tools/stitch.html" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="TMlucas" />
+    <meta
+      name="description"
+      content="Convertisseur image → plan de broderie point de croix dans le navigateur : grille, nombre de couleurs, légende, export PNG. Gratuit, 100 % local."
+    />
+    <meta
+      name="keywords"
+      content="point de croix, broderie, pixel art, plan de broderie, grille, palette, navigateur, gratuit"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Boîte à outils web" />
+    <meta property="og:title" content="Plan de broderie point de croix — Boîte à outils web" />
+    <meta
+      property="og:description"
+      content="Transformer une image en schéma de point de croix : taille en points, max couleurs, légende, export."
+    />
+    <meta property="og:url" content="https://tmlucas.github.io/logo-tools/stitch.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Plan de broderie point de croix — Boîte à outils web" />
+    <meta
+      name="twitter:description"
+      content="Image → plan de broderie en local dans le navigateur. Gratuit, sans compte."
+    />
+    <meta name="theme-color" content="#111827" />
+    <title>Plan de broderie point de croix — Boîte à outils web</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./stitch.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Plan de broderie point de croix",
+        "url": "https://tmlucas.github.io/logo-tools/stitch.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "fr",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "description": "Convertir une image en plan de point de croix : grille, réduction de couleurs, légende, export PNG, traitement local."
+      }
+    </script>
+  </head>
+  <body class="stitch-page">
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a href="./index.html" class="site-nav-brand">Boîte à outils web</a>
+      <div class="site-nav-links">
+        <a href="./index.html">Éditeur d'image</a>
+        <a href="./qr-code.html">Générateur QR Code</a>
+        <a href="./stitch.html" class="is-current">Point de croix</a>
+      </div>
+    </nav>
+
+    <main class="app">
+      <header class="page-header">
+        <h1>Plan de broderie · point de croix</h1>
+        <section class="card intro" aria-labelledby="stitch-intro-title">
+          <h2 id="stitch-intro-title">Présentation</h2>
+          <p>
+            Importez une image, définissez la taille en <strong>points</strong> (comme des pixels de broderie), limitez le nombre de couleurs, puis obtenez un plan à reproduire : grille, symboles et légende des fils.
+          </p>
+          <p>
+            <strong>Gratuit, sans compte.</strong> Tout le traitement (réduction de palette, rendu) se fait <strong>en local</strong> dans votre navigateur : l’image n’est pas envoyée sur un serveur.
+          </p>
+          <p class="intro-hint">
+            Les sections sont repliables. Le résumé indique le rôle de chaque étape lorsqu’elle est fermée.
+          </p>
+        </section>
+      </header>
+
+      <details class="card collapsible" open>
+        <summary class="card-summary">
+          <span class="card-summary-title">1 · Importer une image</span>
+          <span class="card-summary-hint">Fichier, collage (Ctrl+V) ou glisser-déposer</span>
+        </summary>
+        <div class="card-body">
+          <div id="dropzone" class="dropzone" tabindex="0" aria-label="Zone de dépôt image">
+            Glissez une image ici, collez-la (Ctrl+V) ou choisissez un fichier.
+          </div>
+          <div class="field-row">
+            <label class="btn">
+              Choisir un fichier
+              <input id="fileInput" type="file" accept="image/*" hidden />
+            </label>
+          </div>
+          <p id="importStatus" class="status">Aucune image chargée.</p>
+        </div>
+      </details>
+
+      <details class="card collapsible" open>
+        <summary class="card-summary">
+          <span class="card-summary-title">2 · Paramètres du plan</span>
+          <span class="card-summary-hint">Taille en points, max couleurs, grille, symboles</span>
+        </summary>
+        <div class="card-body">
+          <div class="field-row">
+            <label class="field-label">Largeur (points)
+              <input id="gridWidth" type="number" min="8" max="300" step="1" value="80" />
+            </label>
+            <label class="field-label">Hauteur (points)
+              <input id="gridHeight" type="number" min="8" max="300" step="1" value="80" />
+            </label>
+            <label class="field-label field-label--checkbox">
+              <input id="lockAspect" type="checkbox" checked />
+              Conserver le ratio de l’image
+            </label>
+          </div>
+          <div class="field-row">
+            <label class="field-label">Nombre max de couleurs
+              <input id="maxColors" type="number" min="2" max="64" step="1" value="16" />
+            </label>
+            <label class="field-label">Taille d’une case à l’écran (px)
+              <input id="cellSize" type="number" min="4" max="40" step="1" value="12" />
+            </label>
+            <label class="field-label">Échantillonnage
+              <select id="sampleMode">
+                <option value="average" selected>Moyenne (plus doux)</option>
+                <option value="nearest">Plus proche (plus net)</option>
+              </select>
+            </label>
+          </div>
+          <div class="field-row">
+            <label class="field-label field-label--checkbox">
+              <input id="showGrid" type="checkbox" checked />
+              Afficher la grille
+            </label>
+            <label class="field-label field-label--checkbox">
+              <input id="showSymbols" type="checkbox" checked />
+              Symboles par couleur (lisible en N&amp;B)
+            </label>
+            <label class="field-label field-label--checkbox">
+              <input id="ignoreTransparent" type="checkbox" checked />
+              Ignorer la transparence (zones vides)
+            </label>
+          </div>
+          <div class="field-row">
+            <label class="field-label">Seuil alpha (0–255)
+              <input id="alphaThreshold" type="number" min="0" max="255" step="1" value="128" />
+            </label>
+            <button type="button" id="generateBtn" class="btn">Générer le plan</button>
+          </div>
+          <p class="stitch-hint">
+            Astuce : commencez avec 60–100 points de large et 12–24 couleurs. Augmentez ensuite si le détail le demande. Les très grandes grilles (ex. 200×200) restent locales mais peuvent être un peu lentes.
+          </p>
+        </div>
+      </details>
+
+      <details class="card collapsible" open>
+        <summary class="card-summary">
+          <span class="card-summary-title">3 · Aperçu et légende</span>
+          <span class="card-summary-hint">Plan coloré, symboles, liste des couleurs et comptes</span>
+        </summary>
+        <div class="card-body">
+          <p id="patternStats" class="status">Chargez une image puis générez un plan.</p>
+          <div class="stitch-preview-layout">
+            <div class="stitch-preview-wrap" id="previewWrap">
+              <canvas id="patternCanvas" aria-label="Aperçu du plan de broderie"></canvas>
+            </div>
+            <div class="stitch-legend-wrap">
+              <h3>Légende</h3>
+              <div id="legendList" class="stitch-legend-list"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="card collapsible" open>
+        <summary class="card-summary">
+          <span class="card-summary-title">4 · Exporter</span>
+          <span class="card-summary-hint">PNG du plan, PNG légende, CSV des couleurs</span>
+        </summary>
+        <div class="card-body">
+          <div class="field-row">
+            <label class="field-label">Nom du fichier
+              <input id="filename" type="text" value="plan-point-de-croix" />
+            </label>
+            <label class="field-label">Taille d’une case à l’export (px)
+              <input id="exportCellSize" type="number" min="6" max="48" step="1" value="16" />
+            </label>
+          </div>
+          <div class="field-row">
+            <button type="button" id="exportPatternBtn" class="btn">Télécharger le plan (PNG)</button>
+            <button type="button" id="exportLegendBtn" class="btn secondary">Télécharger la légende (PNG)</button>
+            <button type="button" id="exportCsvBtn" class="btn secondary">Télécharger la palette (CSV)</button>
+          </div>
+        </div>
+      </details>
+    </main>
+
+    <script src="./stitch.js"></script>
+  </body>
+</html>
